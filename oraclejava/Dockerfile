@@ -1,6 +1,4 @@
-# https://github.com/gratiartis/dockerfiles/blob/master/oraclejdk8/Dockerfile
-
-FROM ingeus/ubuntu-base
+FROM ubuntu
 MAINTAINER Stephen Masters <steve@scattercode.co.uk>
 
 # Add a repo where OpenJDK can be found.
@@ -10,6 +8,9 @@ RUN apt-get update
 
 # Auto-accept the Oracle JDK license
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-
 RUN apt-get install -y oracle-java8-installer
 
+COPY . /usr/src/myapp
+WORKDIR /usr/src/myapp
+RUN javac Main.java
+CMD ["java", "Main"]
